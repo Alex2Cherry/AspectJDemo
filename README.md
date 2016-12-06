@@ -26,11 +26,20 @@ android studio
         持续优化app的性能需要对代码执行时间进行监控,找出耗时的操作进行优化
         
 - 权限检查
+
+##局限性
+由于aspectJ切面编程的原理采用的是编译时织入代码的方式,导致有以下缺陷
+
+- 无法对父类的方法织入代码
+- 无法对jar包、maven依赖的aar包织入代码
+- 如果是封装成libraryModule的方式使用,通过project(":module_name")方式依赖的所有module,都需要依赖该module(可以通过传递依赖),并且build.gradle中都需要添加香烟的代码
+
+所以,最佳使用环境为:
+
+- 单个module的app
+- 多个module的app但使用project的方式进行依赖
+
         
-- 其它跨模块功能的统一管理
-
-        例如network的统一管理:模块中只需要定义方法,具体执行可以交给aspectJ,可同步返回请求结果,也可通过回调将结果返回
-
 ##使用方式
 
 ###1. 直接在application中使用的方式
